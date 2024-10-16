@@ -83,6 +83,8 @@ object Model2XlsxConversions extends BaseXlsx {
       cs.locked.foreach(cellStyle.setLocked)
       cs.rotation.foreach(cellStyle.setRotation)
       cs.wrapText.foreach(cellStyle.setWrapText)
+
+      cs.quotePrefixed.foreach(cellStyle.setQuotePrefixed)
       cellStyle
     }
 

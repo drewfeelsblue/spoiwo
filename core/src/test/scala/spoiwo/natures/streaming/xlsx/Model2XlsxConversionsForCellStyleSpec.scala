@@ -216,4 +216,21 @@ class Model2XlsxConversionsForCellStyleSpec extends AnyFlatSpec with Matchers {
     xssf.getWrapText shouldBe true
   }
 
+  it should "return non-prefixed by default" in {
+    val model: CellStyle = CellStyle()
+    val xssf: XSSFCellStyle = convertCellStyle(model, workbook)
+    xssf.getQuotePrefixed shouldBe false
+  }
+
+  it should "return non-prefixed when explicitly set to false" in {
+    val model: CellStyle = CellStyle(quotePrefixed = false)
+    val xssf: XSSFCellStyle = convertCellStyle(model, workbook)
+    xssf.getQuotePrefixed shouldBe false
+  }
+
+  it should "return prefixed when explicitly set to true" in {
+    val model: CellStyle = CellStyle(quotePrefixed = true)
+    val xssf: XSSFCellStyle = convertCellStyle(model, workbook)
+    xssf.getQuotePrefixed shouldBe true
+  }
 }

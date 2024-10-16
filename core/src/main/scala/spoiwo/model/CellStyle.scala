@@ -20,7 +20,8 @@ object CellStyle {
       indention: java.lang.Integer = null,
       locked: java.lang.Boolean = null,
       rotation: java.lang.Integer = null,
-      wrapText: java.lang.Boolean = null
+      wrapText: java.lang.Boolean = null,
+      quotePrefixed: java.lang.Boolean = null
   ): CellStyle =
     CellStyle(
       borders = Option(borders),
@@ -36,7 +37,8 @@ object CellStyle {
       indention = Option(indention).map(_.shortValue),
       locked = Option(locked).map(_.booleanValue),
       rotation = Option(rotation).map(_.shortValue),
-      wrapText = Option(wrapText).map(_.booleanValue)
+      wrapText = Option(wrapText).map(_.booleanValue),
+      quotePrefixed = Option(quotePrefixed).map(_.booleanValue)
     )
 }
 
@@ -54,7 +56,8 @@ case class CellStyle private (
     indention: Option[Short],
     locked: Option[Boolean],
     rotation: Option[Short],
-    wrapText: Option[Boolean]
+    wrapText: Option[Boolean],
+    quotePrefixed: Option[Boolean]
 ) {
 
   override def toString: String =
@@ -72,7 +75,8 @@ case class CellStyle private (
       indention.map("indention=" + _),
       locked.map("locked=" + _),
       rotation.map("rotation=" + _),
-      wrapText.map("wrap text=" + _)
+      wrapText.map("wrap text=" + _),
+      quotePrefixed.map("quote prefixed=" + _)
     ).flatten.mkString(", ") + ")"
 
   def withBorders(borders: CellBorders): CellStyle =
@@ -159,6 +163,12 @@ case class CellStyle private (
   def withoutWrapText: CellStyle =
     copy(wrapText = Some(false))
 
+  def withQuotePrefixed: CellStyle =
+    copy(quotePrefixed = Some(true))
+
+  def withoutQuotePrefixed: CellStyle =
+    copy(quotePrefixed = Some(false))
+
   private def dw[T](current: Option[T], default: Option[T]): Option[T] =
     if (current.isDefined) current else default
 
@@ -185,7 +195,8 @@ case class CellStyle private (
     indention = dw(indention, defaultCellStyle.indention),
     locked = dw(locked, defaultCellStyle.locked),
     rotation = dw(rotation, defaultCellStyle.rotation),
-    wrapText = dw(wrapText, defaultCellStyle.wrapText)
+    wrapText = dw(wrapText, defaultCellStyle.wrapText),
+    quotePrefixed = dw(quotePrefixed, defaultCellStyle.quotePrefixed)
   )
 
 }
